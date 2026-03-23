@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Bolsa de Empleo</title>
+    <link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <img src="../static/images/Logo.png" th:src="@{/images/Logo.png}" alt="Logo" class="logo-img">
+        <span class="brand-name">Bolsa de Empleo</span>
+
+        <nav>
+            <a th:href="@{/puestos}" class="nav-item">
+                <img src="../static/images/puesto.png" th:src="@{/images/puesto.png}" alt="" class="nav-icon">
+                <span>Buscar puestos</span>
+            </a>
+            <a th:href="@{/registro-empresa}" class="nav-item">
+                <img src="../static/images/empresa.png" th:src="@{/images/empresa.png}" alt="" class="nav-icon">
+                <span>Registro Empresa</span>
+            </a>
+            <a th:href="@{/registro-oferente}" class="nav-item">
+                <img src="../static/images/oferente.png" th:src="@{/images/oferente.png}" alt="" class="nav-icon">
+                <span>Registro Oferente</span>
+            </a>
+        </nav>
+    </div>
+
+    <a th:href="@{/login}" class="login-link">Login</a>
+</header>
+
+<main>
+    <div class="hero-section">
+        <h1>Bolsa de Empleo</h1>
+        <p class="subtitle">Últimos 5 puestos públicos</p>
+    </div>
+
+    <div class="puestos-container" style="margin-top: 20px;">
+        <div th:each="puesto : ${listaPuestos}" class="hero-section" style="margin-bottom: 15px;">
+            <h3 th:text="${puesto.titulo}">Título del Puesto</h3>
+            <p th:text="${puesto.descripcion}">Descripción breve...</p>
+            <p><strong>Salario: </strong> <span th:text="${puesto.salario}">0.00</span></p>
+        </div>
+
+        <p th:if="${#lists.isEmpty(listaPuestos)}" style="color: #999; font-style: italic;">
+            No hay puestos disponibles en este momento.
+        </p>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-info">
+        <b>Bolsa de Empleo</b>
+        Mapaches Inc.
+    </div>
+    <div style="text-align: right;">
+        <strong>Desarrolladores:</strong> Kevin Solorzano <br> Jose Perez <br> Marc Casadó
+    </div>
+</footer>
+
+</body>
+</html>
