@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrador - Bolsa de Empleo</title>
+    <link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="../static/images/Logo.png" th:src="@{/images/Logo.png}" class="logo-img" alt="Logo">
+        <span class="brand-name">Bolsa de Empleo</span>
+        <nav>
+            <a th:href="@{/}" class="nav-item"><span>Inicio</span></a>
+        </nav>
+    </div>
+    <form th:action="@{/auth/logout}" method="post">
+        <button type="submit" class="btn-secondary">Cerrar sesión</button>
+    </form>
+</header>
+
+<main>
+    <div class="hero-section">
+        <h1>Dashboard de administrador</h1>
+        <p class="subtitle" th:text="${mensajeBienvenida}">Bienvenido administrador</p>
+        <p class="subtitle">Sesión iniciada como <strong th:text="${usuario.nombreVisible}">Administrador Demo</strong>.</p>
+        <div class="dashboard-actions">
+            <a th:href="@{/}" class="btn-secondary">Volver al inicio</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-info">
+        <b>Bolsa de Empleo</b>
+        Mapaches Inc.
+    </div>
+    <div style="text-align: right;">
+        <strong>Desarrolladores:</strong> Kevin Solorzano <br> Jose Perez <br> Marc Casadó
+    </div>
+</footer>
+</body>
+</html>
+

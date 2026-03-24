@@ -25,9 +25,11 @@
         <h1>¡Bienvenido a tu comunidad profesional!</h1>
 
         <form th:action="@{/auth/login}" method="POST" class="login-form">
+            <div th:if="${error}" class="login-error" th:text="${error}"></div>
+
             <div class="input-group">
-                <label for="email">Correo electrónico</label>
-                <input type="email" id="email" name="email" required>
+                <label for="username">Correo electrónico o identificación</label>
+                <input type="text" id="username" name="username" required>
             </div>
 
             <div class="input-group">
@@ -46,6 +48,15 @@
 
             <button type="submit" class="btn-submit">Iniciar sesión</button>
         </form>
+
+        <div class="login-demo-credentials">
+            <strong>Credenciales de prueba</strong>
+            <ul>
+                <li>Empresa: <code>empresa@demo.com</code> / <code>empresa123</code></li>
+                <li>Oferente: <code>oferente@demo.com</code> / <code>oferente123</code></li>
+                <li>Admin: <code>admin</code> / <code>admin123</code></li>
+            </ul>
+        </div>
 
         <div class="login-divider">
             <span>¿Eres nuevo en la Bolsa de Empleo? <a th:href="@{/registro}">Únete ahora</a></span>

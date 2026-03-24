@@ -1,6 +1,8 @@
 package org.project1.bolsaempleo.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.project1.bolsaempleo.repository.PuestoRepository;
+import org.project1.bolsaempleo.service.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,17 @@ public class HomeController {
 
 
     @GetMapping("/login")
-    public String mostrarLogin() {
+    public String mostrarLogin(HttpSession session) {
+        Object sessionUser = session.getAttribute("authenticatedUser");
+        if (sessionUser instanceof AuthenticatedUser authenticatedUser) {
+            return switch (authenticatedUser.rol()) {
+                case "empresa" -> "redirect:/empresa/dashboard";
+                case "oferente" -> "redirect:/oferente/dashboard";
+                case "admin" -> "redirect:/admin/dashboard";
+                default -> "login";
+            };
+        }
+
         return "login";
     }
 }

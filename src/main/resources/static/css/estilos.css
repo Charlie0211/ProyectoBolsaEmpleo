@@ -227,6 +227,62 @@ footer {
     font-size: 14px;
 }
 
+.login-error {
+    background-color: #ffe5e5;
+    color: #a11a1a;
+    border: 1px solid #f3b4b4;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.login-demo-credentials {
+    margin-top: 18px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background-color: #f8f9fb;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+    font-size: 13px;
+}
+
+.login-demo-credentials strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.login-demo-credentials ul {
+    margin-left: 18px;
+}
+
+.login-demo-credentials li {
+    margin-bottom: 6px;
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #0a66c2;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-secondary:hover {
+    background-color: #084f97;
+}
+
 .login-divider a {
     color: #0a66c2;
     text-decoration: none;
