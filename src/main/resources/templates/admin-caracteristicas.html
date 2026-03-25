@@ -32,30 +32,27 @@
         <h1>Catálogo de Características</h1>
         <p class="subtitle">Gestiona las características (habilidades, tecnologías, conocimientos) jerárquicas del sistema</p>
 
-        <div style="margin-top: 20px;">
-            <button type="button" class="btn-primary" style="cursor: pointer;" onclick="document.getElementById('formAgregarCategoria').style.display = 'block'">
-                + Agregar Nueva Categoría
-            </button>
-        </div>
-
-        <!-- Formulario para agregar nueva característica -->
-        <div id="formAgregarCategoria" style="display: none; margin-top: 20px; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
-            <h3>Agregar Nueva Categoría</h3>
-            <form method="POST" action="#" class="puesto-form">
-                <div class="form-grid">
+        <div class="caracteristica-creator-box">
+            <h3>Agregar Característica</h3>
+            <form method="post" action="#" class="caracteristica-creator-form">
+                <div class="caracteristica-creator-grid">
                     <div class="input-group">
-                        <label for="nombreCategoria">Nombre de la Categoría</label>
-                        <input type="text" id="nombreCategoria" name="nombreCategoria" placeholder="Ej: Lenguajes de Programación" required>
+                        <label for="nombreCaracteristica">Nombre</label>
+                        <input type="text" id="nombreCaracteristica" name="nombre" placeholder="Ej: Unit test" required>
                     </div>
                     <div class="input-group">
-                        <label for="descripcion">Descripción</label>
-                        <input type="text" id="descripcion" name="descripcion" placeholder="Descripción de la categoría">
+                        <label for="padreCaracteristica">Padre</label>
+                        <select id="padreCaracteristica" name="padreId">
+                            <option value="">(sin padre)</option>
+                            <option th:each="padre : ${padresCaracteristica}"
+                                    th:value="${padre.id}"
+                                    th:text="${padre.nombre}">
+                                Padre de ejemplo
+                            </option>
+                        </select>
                     </div>
                 </div>
-                <div style="margin-top: 15px;">
-                    <button type="submit" class="btn-submit">Crear Categoría</button>
-                    <button type="button" class="btn-secondary" onclick="document.getElementById('formAgregarCategoria').style.display = 'none'" style="background-color: #666; margin-left: 10px;">Cancelar</button>
-                </div>
+                <button type="submit" class="btn-success">Crear</button>
             </form>
         </div>
 
