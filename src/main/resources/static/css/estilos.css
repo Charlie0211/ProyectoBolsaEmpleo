@@ -203,7 +203,8 @@ footer {
 }
 
 .input-group input,
-.input-group select {
+.input-group select,
+.input-group textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #666;
@@ -212,8 +213,13 @@ footer {
 }
 
 .input-group input:focus,
-.input-group select:focus {
+.input-group select:focus,
+.input-group textarea:focus {
     outline: 2px solid #000;
+}
+
+.input-group textarea {
+    resize: vertical;
 }
 
 .btn-submit {
@@ -375,6 +381,40 @@ footer {
 .empty-row {
     text-align: center;
     color: #7a7a7a;
+}
+
+.puesto-form {
+    margin-top: 22px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-group input {
+    width: auto;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+}
+
+.alert-success {
+    margin-top: 12px;
+    background-color: #e7f6ec;
+    color: #17693f;
+    border: 1px solid #b8e0c5;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 14px;
 }
 
 .login-divider a {

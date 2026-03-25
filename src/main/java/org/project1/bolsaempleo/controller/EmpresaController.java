@@ -7,10 +7,15 @@ import org.project1.bolsaempleo.service.AuthenticatedUser;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class EmpresaController {
@@ -34,7 +39,40 @@ public class EmpresaController {
 
     @GetMapping("/empresa/publicar-puesto")
     public String publicarPuesto(HttpSession session, Model model) {
-        return empresaView(session, model, "empresa-publicar-puesto");
+        String view = empresaView(session, model, "empresa-publicar-puesto");
+        if (view.startsWith("redirect:")) {
+            return view;
+        }
+
+        if (!model.containsAttribute("puesto")) {
+            model.addAttribute("puesto", new Puesto());
+        }
+        return view;
+    }
+
+    @PostMapping("/empresa/publicar-puesto")
+    public String guardarPuesto(@ModelAttribute("puesto") Puesto puesto,
+                                HttpSession session,
+                                Model model,
+                                RedirectAttributes redirectAttributes) {
+        String view = empresaView(session, model, "empresa-publicar-puesto");
+        if (view.startsWith("redirect:")) {
+            return view;
+        }
+
+        List<String> errores = validarPuesto(puesto);
+        if (!errores.isEmpty()) {
+            model.addAttribute("errores", errores);
+            return view;
+        }
+
+        if (puesto.getActivo() == null) {
+            puesto.setActivo(Boolean.TRUE);
+        }
+
+        puestoRepository.save(puesto);
+        redirectAttributes.addFlashAttribute("mensajeExito", "Puesto publicado correctamente.");
+        return "redirect:/empresa/mis-puestos";
     }
 
     @PostMapping("/empresa/puestos/{id}/desactivar")
@@ -77,6 +115,26 @@ public class EmpresaController {
         model.addAttribute("usuario", authenticatedUser);
         model.addAttribute("mensajeBienvenida", "Bienvenido empresa");
         return viewName;
+    }
+
+    private List<String> validarPuesto(Puesto puesto) {
+        List<String> errores = new ArrayList<>();
+
+        if (puesto.getTitulo() == null || puesto.getTitulo().trim().isEmpty()) {
+            errores.add("El titulo es obligatorio.");
+        }
+
+        if (puesto.getDescripcion() == null || puesto.getDescripcion().trim().isEmpty()) {
+            errores.add("La descripcion es obligatoria.");
+        }
+
+        if (puesto.getSalario() == null) {
+            errores.add("El salario es obligatorio.");
+        } else if (puesto.getSalario() < 0) {
+            errores.add("El salario no puede ser negativo.");
+        }
+
+        return errores;
     }
 }
 

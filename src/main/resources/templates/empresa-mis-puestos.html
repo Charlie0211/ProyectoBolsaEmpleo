@@ -28,6 +28,7 @@
 <main>
     <div class="hero-section">
         <h1>Mis puestos</h1>
+        <div class="alert-success" th:if="${mensajeExito}" th:text="${mensajeExito}">Puesto publicado correctamente.</div>
         <div class="dashboard-actions">
             <a th:href="@{/empresa/publicar-puesto}" class="btn-secondary">Publicar puesto</a>
         </div>

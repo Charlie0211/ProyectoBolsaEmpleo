@@ -30,6 +30,42 @@
         <h1>Publicar puesto</h1>
         <p class="subtitle" th:text="${mensajeBienvenida}">Bienvenido empresa</p>
         <p class="subtitle">Sesión iniciada como <strong th:text="${usuario.nombreVisible}">Empresa Demo</strong>.</p>
+
+        <div class="login-error" th:if="${errores != null and !#lists.isEmpty(errores)}">
+            <strong>No se pudo guardar el puesto:</strong>
+            <ul>
+                <li th:each="error : ${errores}" th:text="${error}">Error</li>
+            </ul>
+        </div>
+
+        <form th:action="@{/empresa/publicar-puesto}" th:object="${puesto}" method="post" class="puesto-form">
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="titulo">Titulo del puesto</label>
+                    <input id="titulo" type="text" th:field="*{titulo}" maxlength="120" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="salario">Salario ofrecido</label>
+                    <input id="salario" type="number" th:field="*{salario}" min="0" step="0.01" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="descripcion">Descripcion general del puesto</label>
+                <textarea id="descripcion" th:field="*{descripcion}" rows="5" maxlength="500" required></textarea>
+            </div>
+
+            <div class="input-group checkbox-group">
+                <input id="activo" type="checkbox" th:field="*{activo}">
+                <label for="activo">Publicar como activo</label>
+            </div>
+
+            <div class="dashboard-actions">
+                <button type="submit" class="btn-secondary">Guardar puesto</button>
+                <a th:href="@{/empresa/mis-puestos}" class="btn-small btn-info">Cancelar</a>
+            </div>
+        </form>
     </div>
 </main>
 </body>
