@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidatos - Bolsa de Empleo</title>
+    <link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="../static/images/Logo.png" th:src="@{/images/Logo.png}" class="logo-img" alt="Logo">
+        <span class="brand-name">Bolsa de Empleo</span>
+        <nav>
+            <a th:href="@{/empresa/dashboard}" class="nav-item"><span>Dashboard</span></a>
+            <a th:href="@{/empresa/mis-puestos}" class="nav-item"><span>Mis puestos</span></a>
+            <a th:href="@{/empresa/publicar-puesto}" class="nav-item"><span>Publicar puesto</span></a>
+        </nav>
+    </div>
+    <div class="header-right">
+        <span class="user-name" th:text="${usuario.nombreVisible}">Empresa Demo</span>
+        <form th:action="@{/auth/logout}" method="post">
+            <button type="submit" class="btn-secondary">Cerrar sesión</button>
+        </form>
+    </div>
+</header>
+
+<main>
+    <div class="hero-section">
+        <h1>Candidatos para el puesto</h1>
+        <p class="subtitle" th:if="${puesto != null}">
+            Puesto: <strong th:text="${puesto.descripcion}">Full Stack Developer</strong>
+        </p>
+        <p class="subtitle">Vista de candidatos en construcción.</p>
+        <div class="dashboard-actions">
+            <a th:href="@{/empresa/mis-puestos}" class="btn-secondary">Volver a mis puestos</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>
+

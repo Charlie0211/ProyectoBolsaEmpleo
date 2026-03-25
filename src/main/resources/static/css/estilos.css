@@ -295,6 +295,88 @@ footer {
     background-color: #084f97;
 }
 
+.table-wrapper {
+    margin-top: 18px;
+}
+
+.puestos-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.puestos-table th,
+.puestos-table td {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.puestos-table th {
+    color: #222;
+    font-weight: 700;
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.badge-active {
+    background-color: #d9f3e4;
+    color: #146c43;
+}
+
+.badge-inactive {
+    background-color: #fbe2e2;
+    color: #a11a1a;
+}
+
+.acciones-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.btn-small {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-danger {
+    background-color: #fff;
+    color: #d93025;
+    border-color: #f3b4b4;
+}
+
+.btn-danger:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.btn-info {
+    background-color: #e8f0ff;
+    color: #1554bf;
+    border-color: #b8ccff;
+}
+
+.empty-row {
+    text-align: center;
+    color: #7a7a7a;
+}
+
 .login-divider a {
     color: #0a66c2;
     text-decoration: none;

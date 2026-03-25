@@ -11,6 +11,7 @@ public class Puesto {
     private String titulo;
     private String descripcion;
     private Double salario;
+    private Boolean activo = Boolean.TRUE;
 
     public Puesto() {}
 
@@ -22,4 +23,6 @@ public class Puesto {
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public Double getSalario() { return salario; }
     public void setSalario(Double salario) { this.salario = salario; }
+    public Boolean getActivo() { return activo; }
+    public void setActivo(Boolean activo) { this.activo = activo; }
 }

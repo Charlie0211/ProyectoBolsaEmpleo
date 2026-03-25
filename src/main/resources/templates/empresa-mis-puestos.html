@@ -28,10 +28,55 @@
 <main>
     <div class="hero-section">
         <h1>Mis puestos</h1>
-        <p class="subtitle" th:text="${mensajeBienvenida}">Bienvenido empresa</p>
-        <p class="subtitle">Sesión iniciada como <strong th:text="${usuario.nombreVisible}">Empresa Demo</strong>.</p>
+        <div class="dashboard-actions">
+            <a th:href="@{/empresa/publicar-puesto}" class="btn-secondary">Publicar puesto</a>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="puestos-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Salario</th>
+                    <th>Activo</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="puesto : ${puestos}">
+                    <td th:text="${puesto.id}">1</td>
+                    <td th:text="${puesto.descripcion}">Full Stack Developer</td>
+                    <td th:text="${puesto.salario}">2000.0</td>
+                    <td>
+                        <span th:if="${puesto.activo}" class="badge badge-active">Si</span>
+                        <span th:unless="${puesto.activo}" class="badge badge-inactive">No</span>
+                    </td>
+                    <td class="acciones-cell">
+                        <form th:action="@{/empresa/puestos/{id}/desactivar(id=${puesto.id})}" method="post" class="inline-form">
+                            <button type="submit" class="btn-small btn-danger" th:disabled="${!puesto.activo}">Desactivar</button>
+                        </form>
+                        <a th:href="@{/empresa/candidatos(puestoId=${puesto.id})}" class="btn-small btn-info">Buscar candidatos</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(puestos)}">
+                    <td colspan="5" class="empty-row">No hay puestos creados todavía.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
+
+<footer>
+    <div class="footer-info">
+        <b>Bolsa de Empleo</b>
+        Mapaches Inc.
+    </div>
+    <div style="text-align: right;">
+        <strong>Desarrolladores:</strong> Kevin Solorzano <br> Jose Perez <br> Carlos Lopez
+    </div>
+</footer>
 </body>
 </html>
 
