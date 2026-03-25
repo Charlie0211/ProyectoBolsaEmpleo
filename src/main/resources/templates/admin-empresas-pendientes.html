@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Administrador - Bolsa de Empleo</title>
+    <title>Empresas Pendientes - Bolsa de Empleo</title>
     <link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
 </head>
 <body>
@@ -29,13 +29,27 @@
 
 <main>
     <div class="hero-section">
-        <h1>Administrador</h1>
-        <p class="subtitle">Aprobaciones, catálogo de características y reportes.</p>
-        <div class="dashboard-actions">
-            <a th:href="@{/admin/empresas-pendientes}" class="btn-primary">Empresas pendientes</a>
-            <a th:href="@{/admin/oferentes-pendientes}" class="btn-primary">Oferentes pendientes</a>
-            <a th:href="@{/admin/caracteristicas}" class="btn-primary">Características</a>
-            <a th:href="@{/admin/reportes}" class="btn-primary">Reportes</a>
+        <h1>Empresas Pendientes de Aprobación</h1>
+        <p class="subtitle">Revisa y aprueba las nuevas solicitudes de registro de empresas</p>
+
+        <div class="table-wrapper">
+            <table class="puestos-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Localización</th>
+                        <th>Fecha de Solicitud</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="empty-row">
+                        <td colspan="6">No hay empresas pendientes de aprobación</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </main>
@@ -43,10 +57,11 @@
 <footer>
     <div class="footer-info">
         <b>Bolsa de Empleo</b>
-        Mapaches Inc.
+        Total Soft Inc.
     </div>
     <div style="text-align: right;">
-        <strong>Desarrolladores:</strong> Kevin Solorzano <br> Jose Perez <br> Carlos Lopez
+        <strong>Contacto:</strong> info@bolsoempleo.local <br>
+        <strong>Créditos:</strong> Equipo de desarrollo
     </div>
 </footer>
 </body>

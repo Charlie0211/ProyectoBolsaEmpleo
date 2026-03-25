@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Características - Bolsa de Empleo</title>
+    <link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="../static/images/Logo.png" th:src="@{/images/Logo.png}" class="logo-img" alt="Logo">
+        <span class="brand-name">Bolsa de Empleo</span>
+        <nav>
+            <a th:href="@{/admin/dashboard}" class="nav-item"><span>Dashboard</span></a>
+            <a th:href="@{/admin/empresas-pendientes}" class="nav-item"><span>Empresas pendientes</span></a>
+            <a th:href="@{/admin/oferentes-pendientes}" class="nav-item"><span>Oferentes pendientes</span></a>
+            <a th:href="@{/admin/caracteristicas}" class="nav-item"><span>Características</span></a>
+            <a th:href="@{/admin/reportes}" class="nav-item"><span>Reportes</span></a>
+        </nav>
+    </div>
+    <div class="header-right">
+        <span class="user-email" th:text="${usuario.nombreVisible}">admin@tuorg.com</span>
+        <form th:action="@{/auth/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-secondary">Salir</button>
+        </form>
+    </div>
+</header>
+
+<main>
+    <div class="hero-section">
+        <h1>Catálogo de Características</h1>
+        <p class="subtitle">Gestiona las características (habilidades, tecnologías, conocimientos) jerárquicas del sistema</p>
+
+        <div style="margin-top: 20px;">
+            <button type="button" class="btn-primary" style="cursor: pointer;" onclick="document.getElementById('formAgregarCategoria').style.display = 'block'">
+                + Agregar Nueva Categoría
+            </button>
+        </div>
+
+        <!-- Formulario para agregar nueva característica -->
+        <div id="formAgregarCategoria" style="display: none; margin-top: 20px; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
+            <h3>Agregar Nueva Categoría</h3>
+            <form method="POST" action="#" class="puesto-form">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="nombreCategoria">Nombre de la Categoría</label>
+                        <input type="text" id="nombreCategoria" name="nombreCategoria" placeholder="Ej: Lenguajes de Programación" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="descripcion">Descripción</label>
+                        <input type="text" id="descripcion" name="descripcion" placeholder="Descripción de la categoría">
+                    </div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <button type="submit" class="btn-submit">Crear Categoría</button>
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('formAgregarCategoria').style.display = 'none'" style="background-color: #666; margin-left: 10px;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lista de características por categoría -->
+        <div class="table-wrapper">
+            <h2 style="margin-top: 30px; margin-bottom: 15px;">Características Registradas</h2>
+            <table class="puestos-table">
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Característica</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="empty-row">
+                        <td colspan="4">No hay características registradas. Crea una nueva categoría para comenzar.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-info">
+        <b>Bolsa de Empleo</b>
+        Total Soft Inc.
+    </div>
+    <div style="text-align: right;">
+        <strong>Contacto:</strong> info@bolsoempleo.local <br>
+        <strong>Créditos:</strong> Equipo de desarrollo
+    </div>
+</footer>
+</body>
+</html>
+

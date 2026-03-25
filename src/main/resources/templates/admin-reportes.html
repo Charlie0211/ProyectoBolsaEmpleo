@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - Bolsa de Empleo</title>
+    <link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="../static/images/Logo.png" th:src="@{/images/Logo.png}" class="logo-img" alt="Logo">
+        <span class="brand-name">Bolsa de Empleo</span>
+        <nav>
+            <a th:href="@{/admin/dashboard}" class="nav-item"><span>Dashboard</span></a>
+            <a th:href="@{/admin/empresas-pendientes}" class="nav-item"><span>Empresas pendientes</span></a>
+            <a th:href="@{/admin/oferentes-pendientes}" class="nav-item"><span>Oferentes pendientes</span></a>
+            <a th:href="@{/admin/caracteristicas}" class="nav-item"><span>Características</span></a>
+            <a th:href="@{/admin/reportes}" class="nav-item"><span>Reportes</span></a>
+        </nav>
+    </div>
+    <div class="header-right">
+        <span class="user-email" th:text="${usuario.nombreVisible}">admin@tuorg.com</span>
+        <form th:action="@{/auth/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-secondary">Salir</button>
+        </form>
+    </div>
+</header>
+
+<main>
+    <div class="hero-section">
+        <h1>Reportes</h1>
+        <p class="subtitle">Genera reportes PDF de puestos solicitados por mes</p>
+
+        <!-- Formulario para generar reportes -->
+        <div style="margin-top: 20px; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
+            <h3>Generar Reporte de Puestos</h3>
+            <form method="POST" action="#" class="puesto-form">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="mes">Selecciona el Mes</label>
+                        <select id="mes" name="mes" required>
+                            <option value="">-- Selecciona un mes --</option>
+                            <option value="01">Enero</option>
+                            <option value="02">Febrero</option>
+                            <option value="03">Marzo</option>
+                            <option value="04">Abril</option>
+                            <option value="05">Mayo</option>
+                            <option value="06">Junio</option>
+                            <option value="07">Julio</option>
+                            <option value="08">Agosto</option>
+                            <option value="09">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="anio">Selecciona el Año</label>
+                        <select id="anio" name="anio" required>
+                            <option value="">-- Selecciona un año --</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <button type="submit" class="btn-primary">Descargar Reporte PDF</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Resumen de reportes disponibles -->
+        <div class="table-wrapper">
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Reportes Generados Recientemente</h3>
+            <table class="puestos-table">
+                <thead>
+                    <tr>
+                        <th>Período</th>
+                        <th>Total de Puestos</th>
+                        <th>Empresas</th>
+                        <th>Fecha de Generación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="empty-row">
+                        <td colspan="5">No hay reportes generados aún.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-info">
+        <b>Bolsa de Empleo</b>
+        Total Soft Inc.
+    </div>
+    <div style="text-align: right;">
+        <strong>Contacto:</strong> info@bolsoempleo.local <br>
+        <strong>Créditos:</strong> Equipo de desarrollo
+    </div>
+</footer>
+</body>
+</html>
+
