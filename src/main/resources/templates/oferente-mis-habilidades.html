@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Oferente - Bolsa de Empleo</title>
+    <title>Mis habilidades - Bolsa de Empleo</title>
     <link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
 </head>
 <body>
@@ -12,9 +12,9 @@
         <img src="../static/images/Logo.png" th:src="@{/images/Logo.png}" class="logo-img" alt="Logo">
         <span class="brand-name">Bolsa de Empleo</span>
         <nav>
-            <a th:href="@{/oferente/dashboard}" class="nav-item"><span>DASHBOARD</span></a>
-            <a th:href="@{/oferente/mis-habilidades}" class="nav-item"><span>MIS HABILIDADES</span></a>
-            <a th:href="@{/oferente/mi-cv}" class="nav-item"><span>MI CV</span></a>
+            <a th:href="@{/oferente/dashboard}" class="nav-item"><span>Dashboard</span></a>
+            <a th:href="@{/oferente/mis-habilidades}" class="nav-item"><span>Mis habilidades</span></a>
+            <a th:href="@{/oferente/mi-cv}" class="nav-item"><span>Mi cv</span></a>
         </nav>
     </div>
     <div class="header-right">
@@ -27,24 +27,11 @@
 
 <main>
     <div class="hero-section">
-        <h1>Dashboard de oferente</h1>
+        <h1>Mis habilidades</h1>
         <p class="subtitle" th:text="${mensajeBienvenida}">Bienvenido oferente</p>
         <p class="subtitle">Sesión iniciada como <strong th:text="${usuario.nombreVisible}">Oferente Demo</strong>.</p>
-        <div class="dashboard-actions">
-            <a th:href="@{/}" class="btn-secondary">Volver al inicio</a>
-        </div>
     </div>
 </main>
-
-<footer>
-    <div class="footer-info">
-        <b>Bolsa de Empleo</b>
-        Mapaches Inc.
-    </div>
-    <div style="text-align: right;">
-        <strong>Desarrolladores:</strong> Kevin Solorzano <br> Jose Perez <br> Carlos Lopez
-    </div>
-</footer>
 </body>
 </html>
 

@@ -103,6 +103,18 @@ nav {
     color: #000000;
 }
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+}
+
 
 main {
     flex: 1;
