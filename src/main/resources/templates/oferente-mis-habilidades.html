@@ -28,10 +28,86 @@
 <main>
     <div class="hero-section">
         <h1>Mis habilidades</h1>
-        <p class="subtitle" th:text="${mensajeBienvenida}">Bienvenido oferente</p>
-        <p class="subtitle">Sesión iniciada como <strong th:text="${usuario.nombreVisible}">Oferente Demo</strong>.</p>
+
+        <div class="alert-success" th:if="${mensajeExito}" th:text="${mensajeExito}">Habilidad guardada correctamente.</div>
+        <div class="login-error" th:if="${mensajeError}" th:text="${mensajeError}">Error al guardar.</div>
+
+        <div class="habilidades-layout">
+            <div class="habilidades-panel">
+                <h3>Habilidades guardadas</h3>
+                <table class="puestos-table">
+                    <thead>
+                    <tr>
+                        <th>Caracteristica</th>
+                        <th>Nivel</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="h : ${habilidades}">
+                        <td th:text="${h.caracteristica.nombre}">Java</td>
+                        <td th:text="${h.nivel}">4</td>
+                        <td class="acciones-cell">
+                            <form th:action="@{/oferente/mis-habilidades/{id}/eliminar(id=${h.id})}" method="post" class="inline-form">
+                                <button type="submit" class="btn-small btn-danger"
+                                        onclick="return confirm('¿Eliminar esta habilidad?');">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(habilidades)}">
+                        <td colspan="3" class="empty-row">Aun no has agregado habilidades.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="habilidades-panel habilidades-form-panel">
+                <h3>Agregar habilidad</h3>
+                <form th:action="@{/oferente/mis-habilidades}" method="post" class="puesto-form">
+                    <div class="input-group">
+                        <label for="caracteristicaId">Caracteristica</label>
+                        <select id="caracteristicaId" name="caracteristicaId" required>
+                            <option value="0">-- Selecciona una habilidad --</option>
+                            <optgroup th:each="raiz : ${raices}"
+                                      th:label="${raiz.nombre}"
+                                      th:if="${!#lists.isEmpty(raiz.hijos)}">
+                                <option th:each="hijo : ${raiz.hijos}"
+                                        th:value="${hijo.id}"
+                                        th:text="${hijo.nombre}">
+                                </option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="nivel">Nivel (1-5)</label>
+                        <select id="nivel" name="nivel" required>
+                            <option value="1">1 - Basico</option>
+                            <option value="2">2 - Elemental</option>
+                            <option value="3" selected>3 - Intermedio</option>
+                            <option value="4">4 - Avanzado</option>
+                            <option value="5">5 - Experto</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-primary habilidades-btn">Agregar</button>
+                </form>
+            </div>
+        </div>
     </div>
 </main>
+
+<footer>
+    <div class="footer-info">
+        <b>Bolsa de Empleo</b>
+        Mapaches Inc.
+    </div>
+    <div style="text-align: right;">
+        <strong>Desarrolladores:</strong> Kevin Solorzano <br> Jose Perez <br> Carlos Lopez
+    </div>
+</footer>
 </body>
 </html>
 

@@ -12,9 +12,9 @@
         <img src="../static/images/Logo.png" th:src="@{/images/Logo.png}" class="logo-img" alt="Logo">
         <span class="brand-name">Bolsa de Empleo</span>
         <nav>
-            <a th:href="@{/oferente/dashboard}" class="nav-item"><span>DASHBOARD</span></a>
-            <a th:href="@{/oferente/mis-habilidades}" class="nav-item"><span>MIS HABILIDADES</span></a>
-            <a th:href="@{/oferente/mi-cv}" class="nav-item"><span>MI CV</span></a>
+            <a th:href="@{/oferente/dashboard}" class="nav-item"><span>Dashboard</span></a>
+            <a th:href="@{/oferente/mis-habilidades}" class="nav-item"><span>Mis Habilidades</span></a>
+            <a th:href="@{/oferente/mi-cv}" class="nav-item"><span>Mi Cv</span></a>
         </nav>
     </div>
     <div class="header-right">
@@ -30,8 +30,17 @@
         <h1>Dashboard de oferente</h1>
         <p class="subtitle" th:text="${mensajeBienvenida}">Bienvenido oferente</p>
         <p class="subtitle">Sesión iniciada como <strong th:text="${usuario.nombreVisible}">Oferente Demo</strong>.</p>
-        <div class="dashboard-actions">
-            <a th:href="@{/}" class="btn-secondary">Volver al inicio</a>
+
+        <div class="detalle-card" th:if="${detalleOferente != null}">
+            <h2>Detalle de oferente</h2>
+            <p class="detalle-nombre" th:text="${detalleOferente.nombre}">Nombre Oferente</p>
+            <p><strong>ID:</strong> <span th:text="${detalleOferente.id}">1</span></p>
+            <p><strong>Email:</strong> <span th:text="${detalleOferente.correo}">correo@demo.com</span></p>
+        </div>
+
+        <div class="detalle-card" th:if="${detalleOferente == null}">
+            <h2>Detalle de oferente</h2>
+            <p>No se pudo cargar la información del oferente.</p>
         </div>
     </div>
 </main>
