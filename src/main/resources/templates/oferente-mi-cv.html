@@ -12,9 +12,9 @@
         <img src="../static/images/Logo.png" th:src="@{/images/Logo.png}" class="logo-img" alt="Logo">
         <span class="brand-name">Bolsa de Empleo</span>
         <nav>
-            <a th:href="@{/oferente/dashboard}" class="nav-item"><span>DASHBOARD</span></a>
-            <a th:href="@{/oferente/mis-habilidades}" class="nav-item"><span>MIS HABILIDADES</span></a>
-            <a th:href="@{/oferente/mi-cv}" class="nav-item"><span>MI CV</span></a>
+            <a th:href="@{/oferente/dashboard}" class="nav-item"><span>Dashboard</span></a>
+            <a th:href="@{/oferente/mis-habilidades}" class="nav-item"><span>Mis Habilidades</span></a>
+            <a th:href="@{/oferente/mi-cv}" class="nav-item"><span>Mi Cv</span></a>
         </nav>
     </div>
     <div class="header-right">
@@ -28,8 +28,32 @@
 <main>
     <div class="hero-section">
         <h1>Mi cv</h1>
-        <p class="subtitle" th:text="${mensajeBienvenida}">Bienvenido oferente</p>
-        <p class="subtitle">Sesión iniciada como <strong th:text="${usuario.nombreVisible}">Oferente Demo</strong>.</p>
+
+        <div class="alert-success" th:if="${mensajeExito}" th:text="${mensajeExito}">Curriculum guardado correctamente.</div>
+        <div class="login-error" th:if="${mensajeError}" th:text="${mensajeError}">Error al guardar.</div>
+
+        <!-- CV Actual -->
+        <div class="cv-card" th:if="${cvActual != null}">
+            <h3>Curriculum Actual</h3>
+            <p><strong>Archivo:</strong> <span th:text="${cvActual.nombreArchivo}">documento.pdf</span></p>
+            <p><strong>Fecha de carga:</strong> <span th:text="${#temporals.format(cvActual.fechaCarga, 'dd/MM/yyyy HH:mm')}">01/01/2026 10:30</span></p>
+        </div>
+
+        <!-- Formulario Subir CV -->
+        <div class="cv-form-card">
+            <h3>Subir nuevo curriculum</h3>
+            <form th:action="@{/oferente/mi-cv}" method="post" enctype="multipart/form-data" class="puesto-form">
+                <div class="input-group">
+                    <label for="archivo">Selecciona tu archivo PDF</label>
+                    <input type="file" id="archivo" name="archivo" accept=".pdf" required>
+                    <p style="font-size: 12px; color: #666; margin-top: 5px;">
+                        Formatos: PDF | Tamaño máximo: 5 MB
+                    </p>
+                </div>
+
+                <button type="submit" class="btn-upload">Subir nuevo curriculum</button>
+            </form>
+        </div>
     </div>
 </main>
 </body>

@@ -6,11 +6,13 @@ import org.project1.bolsaempleo.service.AuthenticatedUser;
 import org.project1.bolsaempleo.service.CaracteristicaService;
 import org.project1.bolsaempleo.service.OferenteHabilidadService;
 import org.springframework.stereotype.Controller;
+import org.project1.bolsaempleo.service.OferenteCvService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -19,13 +21,16 @@ public class OferenteController {
     private final CaracteristicaService caracteristicaService;
     private final OferenteHabilidadService oferenteHabilidadService;
     private final OferenteRepository oferenteRepository;
+    private final OferenteCvService oferenteCvService;
 
     public OferenteController(CaracteristicaService caracteristicaService,
                               OferenteHabilidadService oferenteHabilidadService,
-                              OferenteRepository oferenteRepository) {
+                              OferenteRepository oferenteRepository,
+                              OferenteCvService oferenteCvService) {
         this.caracteristicaService = caracteristicaService;
         this.oferenteHabilidadService = oferenteHabilidadService;
         this.oferenteRepository = oferenteRepository;
+        this.oferenteCvService = oferenteCvService;
     }
 
     @GetMapping("/oferente/mis-habilidades")
@@ -91,7 +96,39 @@ public class OferenteController {
 
     @GetMapping("/oferente/mi-cv")
     public String miCv(HttpSession session, Model model) {
-        return oferenteView(session, model, "oferente-mi-cv");
+        String view = oferenteView(session, model, "oferente-mi-cv");
+        if (view.startsWith("redirect:")) {
+            return view;
+        }
+
+        Object sessionUser = session.getAttribute("authenticatedUser");
+        if (sessionUser instanceof AuthenticatedUser authenticatedUser) {
+            oferenteCvService.obtenerCvDelOferente(authenticatedUser.id())
+                    .ifPresent(cv -> model.addAttribute("cvActual", cv));
+        }
+
+        return view;
+    }
+
+    @PostMapping("/oferente/mi-cv")
+    public String subirCv(@RequestParam("archivo") MultipartFile archivo,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes) {
+        Object sessionUser = session.getAttribute("authenticatedUser");
+        if (!(sessionUser instanceof AuthenticatedUser authenticatedUser) || !"oferente".equals(authenticatedUser.rol())) {
+            return "redirect:/login";
+        }
+
+        try {
+            oferenteCvService.guardarCv(authenticatedUser.id(), archivo);
+            redirectAttributes.addFlashAttribute("mensajeExito", "Curriculum guardado correctamente.");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("mensajeError", e.getMessage());
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensajeError", "Error al guardar el curriculum. Intenta de nuevo.");
+        }
+
+        return "redirect:/oferente/mi-cv";
     }
 
     private String oferenteView(HttpSession session, Model model, String viewName) {
