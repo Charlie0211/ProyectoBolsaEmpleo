@@ -37,20 +37,35 @@
             <table class="puestos-table">
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Título</th>
                     <th>Descripción</th>
                     <th>Salario</th>
+                    <th>Características</th>
+                    <th>Tipo</th>
                     <th>Activo</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="puesto : ${puestos}">
-                    <td th:text="${puesto.id}">1</td>
+                    <td th:text="${puesto.titulo}">Desarrollador</td>
                     <td th:text="${puesto.descripcion}">Full Stack Developer</td>
-                    <td th:text="${puesto.salario}">2000.0</td>
+                    <td th:text="${'₡' + puesto.salario}">₡2000.0</td>
                     <td>
-                        <span th:if="${puesto.activo}" class="badge badge-active">Si</span>
+                        <div th:if="${!#lists.isEmpty(puesto.caracteristicas)}" class="carac-badges">
+                            <span th:each="pc : ${puesto.caracteristicas}" class="carac-badge">
+                                <span th:text="${pc.caracteristica.nombre}">Java</span>
+                                <span class="carac-nivel" th:text="'Nv.' + ${pc.nivelRequerido}">Nv.3</span>
+                            </span>
+                        </div>
+                        <span th:if="${#lists.isEmpty(puesto.caracteristicas)}" style="color:#aaa; font-size:13px;">Sin características</span>
+                    </td>
+                    <td>
+                        <span th:if="${puesto.esPublico}" class="badge badge-active">Público</span>
+                        <span th:unless="${puesto.esPublico}" class="badge badge-inactive">Privado</span>
+                    </td>
+                    <td>
+                        <span th:if="${puesto.activo}" class="badge badge-active">Sí</span>
                         <span th:unless="${puesto.activo}" class="badge badge-inactive">No</span>
                     </td>
                     <td class="acciones-cell">
@@ -61,7 +76,7 @@
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(puestos)}">
-                    <td colspan="5" class="empty-row">No hay puestos creados todavía.</td>
+                    <td colspan="7" class="empty-row">No hay puestos creados todavía.</td>
                 </tr>
                 </tbody>
             </table>

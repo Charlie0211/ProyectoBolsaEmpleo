@@ -28,8 +28,6 @@
 <main>
     <div class="hero-section">
         <h1>Publicar puesto</h1>
-        <p class="subtitle" th:text="${mensajeBienvenida}">Bienvenido empresa</p>
-        <p class="subtitle">Sesión iniciada como <strong th:text="${usuario.nombreVisible}">Empresa Demo</strong>.</p>
 
         <div class="login-error" th:if="${errores != null and !#lists.isEmpty(errores)}">
             <strong>No se pudo guardar el puesto:</strong>
@@ -39,35 +37,130 @@
         </div>
 
         <form th:action="@{/empresa/publicar-puesto}" th:object="${puesto}" method="post" class="puesto-form">
+
+            <!-- ====== DATOS GENERALES ====== -->
             <div class="form-grid">
                 <div class="input-group">
-                    <label for="titulo">Titulo del puesto</label>
+                    <label for="titulo">Título del puesto</label>
                     <input id="titulo" type="text" th:field="*{titulo}" maxlength="120" required>
                 </div>
-
                 <div class="input-group">
-                    <label for="salario">Salario ofrecido</label>
+                    <label for="salario">Salario ofrecido (₡)</label>
                     <input id="salario" type="number" th:field="*{salario}" min="0" step="0.01" required>
                 </div>
             </div>
 
             <div class="input-group">
-                <label for="descripcion">Descripcion general del puesto</label>
-                <textarea id="descripcion" th:field="*{descripcion}" rows="5" maxlength="500" required></textarea>
+                <label for="descripcion">Descripción general del puesto</label>
+                <textarea id="descripcion" th:field="*{descripcion}" rows="4" maxlength="500" required></textarea>
             </div>
 
-            <div class="input-group checkbox-group">
-                <input id="activo" type="checkbox" th:field="*{activo}">
-                <label for="activo">Publicar como activo</label>
+            <div class="form-grid" style="margin-top:10px;">
+                <div class="input-group checkbox-group">
+                    <input id="activo" type="checkbox" th:field="*{activo}">
+                    <label for="activo">Publicar como activo</label>
+                </div>
+                <div class="input-group checkbox-group">
+                    <input id="esPublico" type="checkbox" th:field="*{esPublico}">
+                    <label for="esPublico">Puesto público (visible para todos)</label>
+                </div>
             </div>
 
-            <div class="dashboard-actions">
+            <!-- ====== SECCIÓN CARACTERÍSTICAS ====== -->
+            <div class="caracteristica-seccion">
+                <h3>Características requeridas</h3>
+                <p style="font-size:13px; color:#555; margin-bottom:12px;">
+                    Agrega las habilidades que debe tener el candidato y el nivel mínimo requerido (1=Básico, 5=Experto).
+                </p>
+
+                <!--
+                    Fila-plantilla OCULTA: renderizada por Thymeleaf (con los optgroups reales).
+                    Los inputs están disabled → NO se envían con el formulario.
+                    JavaScript clona esta fila, la hace visible y activa sus inputs.
+                -->
+                <div id="carac-template" class="caracteristica-row" style="display:none;" aria-hidden="true">
+                    <select name="caracteristicaIds" disabled class="carac-select">
+                        <option value="0">-- Seleccionar habilidad --</option>
+                        <optgroup th:each="raiz : ${raices}"
+                                  th:label="${raiz.nombre}"
+                                  th:if="${!#lists.isEmpty(raiz.hijos)}">
+                            <option th:each="hijo : ${raiz.hijos}"
+                                    th:value="${hijo.id}"
+                                    th:text="${hijo.nombre}">
+                            </option>
+                        </optgroup>
+                    </select>
+                    <select name="niveles" disabled class="nivel-select">
+                        <option value="1">1 – Básico</option>
+                        <option value="2">2 – Elemental</option>
+                        <option value="3">3 – Intermedio</option>
+                        <option value="4">4 – Avanzado</option>
+                        <option value="5">5 – Experto</option>
+                    </select>
+                    <button type="button" class="btn-small btn-danger carac-remove">✕ Quitar</button>
+                </div>
+
+                <!-- Aquí se insertan las filas activas -->
+                <div id="carac-container"></div>
+
+                <button type="button" id="btn-agregar-carac" class="btn-small btn-info" style="margin-top:10px;">
+                    + Agregar característica
+                </button>
+
+                <p id="carac-vacio-msg" style="font-size:13px; color:#999; margin-top:8px;">
+                    No se han agregado características. Puedes agregar el puesto sin ellas.
+                </p>
+            </div>
+
+            <!-- ====== BOTONES ====== -->
+            <div class="dashboard-actions" style="margin-top:20px;">
                 <button type="submit" class="btn-secondary">Guardar puesto</button>
                 <a th:href="@{/empresa/mis-puestos}" class="btn-small btn-info">Cancelar</a>
             </div>
         </form>
     </div>
 </main>
+
+<footer>
+    <div class="footer-info">
+        <b>Bolsa de Empleo</b>
+        Mapaches Inc.
+    </div>
+    <div style="text-align: right;">
+        <strong>Desarrolladores:</strong> Kevin Solorzano <br> Jose Perez <br> Carlos Lopez
+    </div>
+</footer>
+
+<script>
+    const template  = document.getElementById('carac-template');
+    const container = document.getElementById('carac-container');
+    const vacioMsg  = document.getElementById('carac-vacio-msg');
+
+    function actualizarMensajeVacio() {
+        vacioMsg.style.display = container.children.length === 0 ? 'block' : 'none';
+    }
+
+    document.getElementById('btn-agregar-carac').addEventListener('click', function () {
+        const clone = template.cloneNode(true);
+        clone.removeAttribute('id');
+        clone.removeAttribute('aria-hidden');
+        clone.style.display = 'flex';
+
+        // Activar los selects del clon para que se envíen con el formulario
+        clone.querySelectorAll('[disabled]').forEach(el => el.removeAttribute('disabled'));
+
+        // Botón de quitar fila
+        clone.querySelector('.carac-remove').addEventListener('click', function () {
+            clone.remove();
+            actualizarMensajeVacio();
+        });
+
+        container.appendChild(clone);
+        actualizarMensajeVacio();
+    });
+
+    actualizarMensajeVacio();
+</script>
 </body>
 </html>
 
