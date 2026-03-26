@@ -32,14 +32,12 @@
         <div class="alert-success" th:if="${mensajeExito}" th:text="${mensajeExito}">Curriculum guardado correctamente.</div>
         <div class="login-error" th:if="${mensajeError}" th:text="${mensajeError}">Error al guardar.</div>
 
-        <!-- CV Actual -->
         <div class="cv-card" th:if="${cvActual != null}">
             <h3>Curriculum Actual</h3>
             <p><strong>Archivo:</strong> <span th:text="${cvActual.nombreArchivo}">documento.pdf</span></p>
             <p><strong>Fecha de carga:</strong> <span th:text="${#temporals.format(cvActual.fechaCarga, 'dd/MM/yyyy HH:mm')}">01/01/2026 10:30</span></p>
         </div>
 
-        <!-- Formulario Subir CV -->
         <div class="cv-form-card">
             <h3>Subir nuevo curriculum</h3>
             <form th:action="@{/oferente/mi-cv}" method="post" enctype="multipart/form-data" class="puesto-form">

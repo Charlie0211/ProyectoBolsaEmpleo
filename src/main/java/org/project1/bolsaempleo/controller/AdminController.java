@@ -26,7 +26,6 @@ public class AdminController {
         if (!verificarRolAdmin(session, model)) {
             return "redirect:/login";
         }
-        // Aquí se agregaría la lógica para obtener empresas pendientes de la base de datos
         return "admin-empresas-pendientes";
     }
 
@@ -38,7 +37,6 @@ public class AdminController {
         if (!verificarRolAdmin(session, model)) {
             return "redirect:/login";
         }
-        // Aquí se agregaría la lógica para obtener oferentes pendientes de la base de datos
         return "admin-oferentes-pendientes";
     }
 
@@ -49,9 +47,7 @@ public class AdminController {
             return "redirect:/login";
         }
 
-        // Todas las características raíz para la tabla
         model.addAttribute("raices", caracteristicaService.obtenerRaices());
-        // Solo las raíces pueden ser padre — evita jerarquías de más de 2 niveles
         model.addAttribute("padresCaracteristica", caracteristicaService.obtenerRaices());
         return "admin-caracteristicas";
     }
@@ -101,7 +97,6 @@ public class AdminController {
         if (!verificarRolAdmin(session, model)) {
             return "redirect:/login";
         }
-        // Aquí se agregaría la lógica para generar reportes
         return "admin-reportes";
     }
 
