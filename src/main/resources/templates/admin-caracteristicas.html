@@ -30,24 +30,29 @@
 <main>
     <div class="hero-section">
         <h1>Catálogo de Características</h1>
-        <p class="subtitle">Gestiona las características (habilidades, tecnologías, conocimientos) jerárquicas del sistema</p>
+        <p class="subtitle">Gestiona las habilidades y tecnologías jerárquicas del sistema</p>
 
+        <!-- Mensajes de éxito / error -->
+        <div class="alert-success" th:if="${mensajeExito}" th:text="${mensajeExito}"></div>
+        <div class="login-error" th:if="${mensajeError}" th:text="${mensajeError}"></div>
+
+        <!-- ====== FORMULARIO AGREGAR CARACTERÍSTICA ====== -->
         <div class="caracteristica-creator-box">
             <h3>Agregar Característica</h3>
-            <form method="post" action="#" class="caracteristica-creator-form">
+            <form th:action="@{/admin/caracteristicas}" method="post" class="caracteristica-creator-form">
                 <div class="caracteristica-creator-grid">
                     <div class="input-group">
                         <label for="nombreCaracteristica">Nombre</label>
-                        <input type="text" id="nombreCaracteristica" name="nombre" placeholder="Ej: Unit test" required>
+                        <input type="text" id="nombreCaracteristica" name="nombre"
+                               placeholder="Ej: Java, Unit Test, CSS…" required>
                     </div>
                     <div class="input-group">
                         <label for="padreCaracteristica">Padre</label>
                         <select id="padreCaracteristica" name="padreId">
-                            <option value="">(sin padre)</option>
+                            <option value="">(sin padre — será categoría raíz)</option>
                             <option th:each="padre : ${padresCaracteristica}"
                                     th:value="${padre.id}"
                                     th:text="${padre.nombre}">
-                                Padre de ejemplo
                             </option>
                         </select>
                     </div>
@@ -56,24 +61,44 @@
             </form>
         </div>
 
-        <!-- Lista de características por categoría -->
+
         <div class="table-wrapper">
             <h2 style="margin-top: 30px; margin-bottom: 15px;">Características Registradas</h2>
-            <table class="puestos-table">
-                <thead>
-                    <tr>
-                        <th>Categoría</th>
-                        <th>Característica</th>
-                        <th>Descripción</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="empty-row">
-                        <td colspan="4">No hay características registradas. Crea una nueva categoría para comenzar.</td>
-                    </tr>
-                </tbody>
-            </table>
+
+            <!-- Sin datos -->
+            <p th:if="${#lists.isEmpty(raices)}" class="empty-row" style="padding: 16px 0;">
+                No hay características registradas todavía.
+            </p>
+
+            <!-- Por cada categoría raíz -->
+            <div th:each="raiz : ${raices}" class="categoria-bloque">
+                <!-- Fila de categoría padre -->
+                <div class="categoria-header">
+                    <span class="categoria-nombre" th:text="${raiz.nombre}">Lenguajes de programación</span>
+                    <form th:action="@{/admin/caracteristicas/{id}/eliminar(id=${raiz.id})}" method="post" class="inline-form">
+                        <button type="submit" class="btn-small btn-danger"
+                                onclick="return confirm('¿Eliminar esta categoría y todas sus subcategorías?')">
+                            Eliminar
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Subcategorías / hijos -->
+                <div th:if="${!#lists.isEmpty(raiz.hijos)}" class="hijos-lista">
+                    <div th:each="hijo : ${raiz.hijos}" class="hijo-fila">
+                        <span th:text="${hijo.nombre}">Java</span>
+                        <form th:action="@{/admin/caracteristicas/{id}/eliminar(id=${hijo.id})}" method="post" class="inline-form">
+                            <button type="submit" class="btn-small btn-danger"
+                                    onclick="return confirm('¿Eliminar esta característica?')">
+                                Eliminar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div th:if="${#lists.isEmpty(raiz.hijos)}" class="hijos-vacio">
+                    <em>Sin subcategorías</em>
+                </div>
+            </div>
         </div>
     </div>
 </main>
@@ -84,7 +109,7 @@
         Total Soft Inc.
     </div>
     <div style="text-align: right;">
-        <strong>Contacto:</strong> info@bolsoempleo.local <br>
+        <strong>Contacto:</strong> info@bolsaempleo.local <br>
         <strong>Créditos:</strong> Equipo de desarrollo
     </div>
 </footer>

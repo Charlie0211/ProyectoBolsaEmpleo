@@ -487,3 +487,53 @@ footer {
 .btn-success:hover {
     background-color: #15803d;
 }
+
+/* ======= Jerarquía de características ======= */
+.categoria-bloque {
+    margin-top: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.categoria-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background-color: #f0f4ff;
+    border-bottom: 1px solid #d1d5db;
+}
+
+.categoria-nombre {
+    font-weight: 700;
+    font-size: 15px;
+    color: #1e3a8a;
+}
+
+.hijos-lista {
+    padding: 6px 0;
+    background-color: #ffffff;
+}
+
+.hijo-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 16px 7px 32px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 14px;
+    color: #374151;
+}
+
+.hijo-fila:last-child {
+    border-bottom: none;
+}
+
+.hijos-vacio {
+    padding: 8px 16px 8px 32px;
+    color: #9ca3af;
+    font-size: 13px;
+    font-style: italic;
+}
+
