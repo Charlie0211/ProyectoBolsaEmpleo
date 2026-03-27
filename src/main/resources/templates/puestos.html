@@ -36,7 +36,8 @@
                                     <input type="checkbox"
                                            name="caracteristicaIds"
                                            th:value="${hijo.id}"
-                                           th:checked="${#lists.contains(selectedCaracteristicaIds, hijo.id)}">
+                                           th:checked="${#lists.contains(selectedCaracteristicaIds, hijo.id)}"
+                                           th:attr="data-nombre=${hijo.nombre},data-nivel=${selectedNiveles[hijo.id] != null ? selectedNiveles[hijo.id] : 3}">
                                     <span class="carac-box-label" th:text="${hijo.nombre}">Java</span>
                                 </label>
                             </div>
@@ -45,11 +46,39 @@
                     <p class="help-text">Tip: haz clic en las cajitas para marcar una o varias características.</p>
                 </div>
 
+                <div class="nivel-por-caracteristica-panel">
+                    <h3>Nivel por característica seleccionada</h3>
+                    <div id="nivelesContainer" class="niveles-container"></div>
+                    <p id="nivelesVacio" class="help-text">Selecciona una o más características para asignar su nivel individual.</p>
+                </div>
+
                 <div class="dashboard-actions">
                     <button type="submit" class="btn-secondary">Aplicar filtro</button>
                     <a th:href="@{/puestos}" class="btn-small btn-info">Limpiar</a>
                 </div>
             </form>
+        </div>
+
+        <div class="table-wrapper">
+            <h2>Resultados</h2>
+
+            <div class="puestos-publicos-grid" th:if="${resultadosPuestos != null and !#lists.isEmpty(resultadosPuestos)}">
+                <div th:each="r : ${resultadosPuestos}" class="puesto-card">
+                    <h3 class="puesto-empresa" th:text="${r.puesto.titulo}">Empresa</h3>
+                    <p class="puesto-titulo" th:text="${r.puesto.descripcion}">Titulo</p>
+                    <p class="puesto-salario">
+                        ₡ <span th:text="${#numbers.formatDecimal(r.puesto.salario, 1, 'COMMA', 2, 'POINT')}">1,500.00</span>
+                    </p>
+
+                    <p class="coincidencia-msg" th:text="${r.mensajeCoincidencia}">66% de coincidencia (2/3)</p>
+
+                    <a th:href="@{/puestos/{id}(id=${r.puesto.id})}" class="btn-ver-detalle">Ver detalle</a>
+                </div>
+            </div>
+
+            <p th:if="${resultadosPuestos != null and #lists.isEmpty(resultadosPuestos)}" class="puestos-vacio">
+                No hay puestos con coincidencias para los filtros seleccionados.
+            </p>
         </div>
     </div>
 </main>
@@ -63,5 +92,66 @@
         <strong>Desarrolladores:</strong> Kevin Solorzano <br> Jose Perez <br> Carlos Lopez
     </div>
 </footer>
+
+<script>
+    (function () {
+        const checkboxes = document.querySelectorAll('input[name="caracteristicaIds"]');
+        const nivelesContainer = document.getElementById('nivelesContainer');
+        const nivelesVacio = document.getElementById('nivelesVacio');
+
+        function buildNivelSelect(name, selected) {
+            const select = document.createElement('select');
+            select.name = name;
+            select.className = 'nivel-item-select';
+
+            const labels = {
+                1: '1 - Basico',
+                2: '2 - Elemental',
+                3: '3 - Intermedio',
+                4: '4 - Avanzado',
+                5: '5 - Experto'
+            };
+
+            for (let i = 1; i <= 5; i++) {
+                const option = document.createElement('option');
+                option.value = String(i);
+                option.textContent = labels[i];
+                if (i === selected) option.selected = true;
+                select.appendChild(option);
+            }
+            return select;
+        }
+
+        function renderNiveles() {
+            nivelesContainer.innerHTML = '';
+
+            checkboxes.forEach((checkbox) => {
+                if (!checkbox.checked) return;
+
+                const id = checkbox.value;
+                const nombre = checkbox.getAttribute('data-nombre') || 'Caracteristica';
+                const nivelDefault = parseInt(checkbox.getAttribute('data-nivel') || '3', 10);
+
+                const row = document.createElement('div');
+                row.className = 'nivel-item-row';
+
+                const label = document.createElement('span');
+                label.className = 'nivel-item-label';
+                label.textContent = nombre;
+
+                const select = buildNivelSelect(`nivelesPorCaracteristica[${id}]`, nivelDefault);
+
+                row.appendChild(label);
+                row.appendChild(select);
+                nivelesContainer.appendChild(row);
+            });
+
+            nivelesVacio.style.display = nivelesContainer.children.length === 0 ? 'block' : 'none';
+        }
+
+        checkboxes.forEach((checkbox) => checkbox.addEventListener('change', renderNiveles));
+        renderNiveles();
+    })();
+</script>
 </body>
 </html>

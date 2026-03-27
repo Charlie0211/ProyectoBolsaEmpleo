@@ -16,4 +16,7 @@ public interface PuestoRepository extends JpaRepository<Puesto, Long> {
 
 	@EntityGraph(attributePaths = {"caracteristicas", "caracteristicas.caracteristica"})
 	Optional<Puesto> findByIdAndEsPublicoTrueAndActivoTrue(Long id);
+
+	@EntityGraph(attributePaths = {"caracteristicas", "caracteristicas.caracteristica"})
+	List<Puesto> findByEsPublicoTrueAndActivoTrueOrderByIdDesc();
 }
