@@ -724,3 +724,264 @@ footer {
     background-color: #0d3817;
 }
 
+/* ======= Home: tarjetas de puestos públicos ======= */
+.puestos-publicos-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+}
+
+.puesto-card {
+    position: relative;
+    background-color: #eaf5ea;
+    border: 1px solid #d0e7d0;
+    border-radius: 10px;
+    padding: 14px 14px 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.puesto-card:hover,
+.puesto-card:focus-within {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.puesto-empresa {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+    color: #1f2937;
+}
+
+.puesto-titulo {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #334155;
+}
+
+.puesto-salario {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #111827;
+}
+
+.btn-ver-detalle {
+    display: inline-block;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #60a5fa;
+    color: #3b82f6;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.puesto-card:hover .btn-ver-detalle,
+.puesto-card:focus-within .btn-ver-detalle {
+    background-color: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
+.puesto-submenu {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: calc(100% - 8px);
+    z-index: 20;
+    background-color: #ffffff;
+    border: 1px solid #93c5fd;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+.puesto-card:hover .puesto-submenu,
+.puesto-card:focus-within .puesto-submenu {
+    display: block;
+}
+
+.submenu-titulo {
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1f2937;
+}
+
+.submenu-lista {
+    margin-left: 18px;
+}
+
+.submenu-lista li {
+    margin-bottom: 4px;
+    color: #334155;
+}
+
+.submenu-vacio {
+    color: #6b7280;
+    font-style: italic;
+}
+
+.puestos-vacio {
+    color: #777;
+    font-style: italic;
+}
+
+/* ======= Detalle de puesto ======= */
+.puesto-detalle-card {
+    margin-top: 20px;
+    background-color: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    padding: 22px;
+}
+
+.puesto-detalle-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    color: #111827;
+}
+
+.puesto-detalle-desc {
+    color: #334155;
+    margin-bottom: 14px;
+    font-size: 1rem;
+}
+
+.puesto-detalle-salario {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #0f172a;
+    margin-bottom: 18px;
+}
+
+.detalle-caracteristicas {
+    margin-top: 8px;
+}
+
+.detalle-caracteristicas h3 {
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+}
+
+.detalle-caracteristicas ul {
+    margin-left: 20px;
+    margin-bottom: 16px;
+}
+
+.detalle-caracteristicas li {
+    margin-bottom: 6px;
+}
+
+.btn-aplicar {
+    display: inline-block;
+    background-color: #16a34a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-aplicar:hover {
+    background-color: #15803d;
+}
+
+@media (hover: none) {
+    .puesto-submenu {
+        position: static;
+        display: block;
+        margin-top: 10px;
+        box-shadow: none;
+    }
+}
+
+/* ======= Buscar puestos: filtro por características ======= */
+.filtro-card {
+    margin-top: 18px;
+    border: 1px solid #d8e5d8;
+    background-color: #eef8ee;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.multi-select {
+    min-height: 230px;
+    background-color: #ffffff;
+}
+
+.help-text {
+    margin-top: 6px;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.carac-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 340px;
+    overflow-y: auto;
+    padding: 8px;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+}
+
+.carac-group h4 {
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 14px;
+}
+
+.carac-box-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.carac-box {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.carac-box input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.carac-box-label {
+    display: inline-block;
+    padding: 8px 10px;
+    border: 1px solid #93c5fd;
+    border-radius: 10px;
+    background-color: #eff6ff;
+    color: #1e3a8a;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+}
+
+.carac-box:hover .carac-box-label {
+    border-color: #60a5fa;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+}
+
+.carac-box input:checked + .carac-box-label {
+    background-color: #2563eb;
+    color: #ffffff;
+    border-color: #1d4ed8;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+}
+

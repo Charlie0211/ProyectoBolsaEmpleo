@@ -38,14 +38,30 @@
         <p class="subtitle">Últimos 5 puestos públicos</p>
     </div>
 
-    <div class="puestos-container" style="margin-top: 20px;">
-        <div th:each="puesto : ${listaPuestos}" class="hero-section" style="margin-bottom: 15px;">
-            <h3 th:text="${puesto.titulo}">Título del Puesto</h3>
-            <p th:text="${puesto.descripcion}">Descripción breve...</p>
-            <p><strong>Salario: </strong> <span th:text="${puesto.salario}">0.00</span></p>
+    <div class="puestos-publicos-grid">
+        <div th:each="puesto : ${listaPuestos}" class="puesto-card">
+            <h3 class="puesto-empresa" th:text="${puesto.titulo}">Empresa</h3>
+            <p class="puesto-titulo" th:text="${puesto.descripcion}">Título del puesto</p>
+            <p class="puesto-salario">
+                ₡ <span th:text="${#numbers.formatDecimal(puesto.salario, 1, 'COMMA', 2, 'POINT')}">1,500.00</span>
+            </p>
+
+            <a th:href="@{/puestos/{id}(id=${puesto.id})}" class="btn-ver-detalle">Ver detalle</a>
+
+            <div class="puesto-submenu" role="note">
+                <p class="submenu-titulo" th:text="${puesto.descripcion}">Detalle del puesto</p>
+                <ul class="submenu-lista" th:if="${!#lists.isEmpty(puesto.caracteristicas)}">
+                    <li th:each="pc : ${puesto.caracteristicas}">
+                        <span th:text="|${pc.caracteristica.nombre} (nivel ${pc.nivelRequerido})|">Tecnologías Web (nivel 3)</span>
+                    </li>
+                </ul>
+                <p class="submenu-vacio" th:if="${#lists.isEmpty(puesto.caracteristicas)}">
+                    Sin características registradas.
+                </p>
+            </div>
         </div>
 
-        <p th:if="${#lists.isEmpty(listaPuestos)}" style="color: #999; font-style: italic;">
+        <p th:if="${#lists.isEmpty(listaPuestos)}" class="puestos-vacio">
             No hay puestos disponibles en este momento.
         </p>
     </div>

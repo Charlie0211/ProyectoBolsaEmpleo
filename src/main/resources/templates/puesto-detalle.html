@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de puesto - Bolsa de Empleo</title>
+    <link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="../static/images/Logo.png" th:src="@{/images/Logo.png}" alt="Logo" class="logo-img">
+        <span class="brand-name">Bolsa de Empleo</span>
+        <nav>
+            <a th:href="@{/}" class="nav-item"><span>Inicio</span></a>
+            <a th:href="@{/puestos}" class="nav-item"><span>Buscar puestos</span></a>
+        </nav>
+    </div>
+    <a th:href="@{/login}" class="login-link">Login</a>
+</header>
+
+<main>
+    <div class="hero-section">
+        <h1>Detalle del puesto</h1>
+        <p class="subtitle">Información completa del puesto seleccionado</p>
+    </div>
+
+    <div class="puesto-detalle-card">
+        <h2 th:text="${puesto.titulo}">Nombre del puesto</h2>
+        <p class="puesto-detalle-desc" th:text="${puesto.descripcion}">Descripción del puesto</p>
+        <p class="puesto-detalle-salario">
+            Salario: ₡ <span th:text="${#numbers.formatDecimal(puesto.salario, 1, 'COMMA', 2, 'POINT')}">1,500.00</span>
+        </p>
+
+        <div class="detalle-caracteristicas">
+            <h3>Características requeridas</h3>
+            <ul th:if="${!#lists.isEmpty(puesto.caracteristicas)}">
+                <li th:each="pc : ${puesto.caracteristicas}"
+                    th:text="|${pc.caracteristica.nombre} (nivel ${pc.nivelRequerido})|">
+                    Java (nivel 4)
+                </li>
+            </ul>
+            <p class="submenu-vacio" th:if="${#lists.isEmpty(puesto.caracteristicas)}">Este puesto no tiene características registradas.</p>
+        </div>
+
+        <a th:href="@{/login}" class="btn-aplicar">Aplicar</a>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-info">
+        <b>Bolsa de Empleo</b>
+        Mapaches Inc.
+    </div>
+    <div style="text-align: right;">
+        <strong>Desarrolladores:</strong> Kevin Solorzano <br> Jose Perez <br> Carlos Lopez
+    </div>
+</footer>
+</body>
+</html>
+
